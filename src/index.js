@@ -110,6 +110,9 @@ class Game extends React.Component {
     this.state={
       history: [{
         squares: Array(9).fill(null),
+
+        // adding the index of the cell that was edited
+        squareNumber: -1,
       }],
       stepNumber: 0,
       xIsNext: true,
@@ -129,6 +132,8 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
+        // set the index of the edited cell
+        squareNumber: i,
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -150,7 +155,9 @@ class Game extends React.Component {
 
     // mapping history
     const moves = history.map((step, move) => {
-      const desc = move ? 'Go to move #' + move : 'Go to game start';
+      // changing label for buttons to include row and column number
+      const moveButtonLabel = 'Go to move #' + move + ' ( Row : ' + Math.floor(history[move].squareNumber/3) + ' , Column : '+ history[move].squareNumber%3 +' )'
+      const desc = move ? moveButtonLabel : 'Go to game start';
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
