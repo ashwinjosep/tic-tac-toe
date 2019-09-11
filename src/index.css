@@ -48,3 +48,15 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+/* CSS for bold button */
+.btnHighlight {
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* CSS for normal button */
+.btnNormal {
+  font-style: normal;
+  font-weight: normal;
+}

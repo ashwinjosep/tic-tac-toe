@@ -158,9 +158,11 @@ class Game extends React.Component {
       // changing label for buttons to include row and column number
       const moveButtonLabel = 'Go to move #' + move + ' ( Row : ' + Math.floor(history[move].squareNumber/3) + ' , Column : '+ history[move].squareNumber%3 +' )'
       const desc = move ? moveButtonLabel : 'Go to game start';
+      const btnClass = move===this.state.stepNumber?'btnHighlight':'btnNormal';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className={btnClass}
+          onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       )
     })
