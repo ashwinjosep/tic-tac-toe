@@ -6,7 +6,7 @@ import './index.css';
 // Function components are used for classes that only have render methods and no state
 function Square(props){
   return(
-    <button className="square" onClick={props.onClick}>
+    <button className={"square "+props.value} onClick={props.onClick}>
       {props.value}
     </button>
   )
@@ -54,7 +54,7 @@ class Board extends React.Component {
   //       return;
   //     }
   //
-  //     squares[i] = this.state.xIsNext? 'X': 'O';
+  //     squares[i] = this.state.xIsNext? 'x': 'o';
   //     this.setState({
   //       squares: squares,
   //       xIsNext: !this.state.xIsNext,
@@ -92,7 +92,7 @@ class Board extends React.Component {
     //   status = "Winner : "+winner;
     // }
     // else {
-    //   status = 'Next player: '+ (this.state.xIsNext? 'X': 'O');
+    //   status = 'Next player: '+ (this.state.xIsNext? 'x': 'o');
     // }
 
     return (
@@ -141,12 +141,14 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length-1];
     const squares = current.squares.slice();
-    if(calculateWinner(squares) || squares[i])
+    const [winner,c1,c2,c3]=calculateWinner(squares);
+    if(winner==='x'||winner==='o'||squares[i])
     {
+      // console.log("Winner found",c1,c2,c3);
       return;
     }
 
-    squares[i] = this.state.xIsNext? 'X': 'O';
+    squares[i] = this.state.xIsNext? 'x': 'o';
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -169,17 +171,19 @@ class Game extends React.Component {
 
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const [winner,c1,c2,c3] = calculateWinner(current.squares);
+    // console.log(winner,c1,c2,c3);
 
     // mapping history
     const moves = history.map((step, move) => {
       // changing label for buttons to include row and column number
       const moveButtonLabel = 'Go to move #' + move + ' ( Row : ' + Math.floor(history[move].squareNumber/3) + ' , Column : '+ history[move].squareNumber%3 +' )'
       const desc = move ? moveButtonLabel : 'Go to game start';
-      const btnClass = move===this.state.stepNumber?'btnHighlight':'btnNormal';
+      const btnClass = move===this.state.stepNumber?"btn btn-primary btn-block":"btn btn-secondary btn-block";
       return (
         <li key={move}>
           <button className={btnClass}
+          type={'button'}
           onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       )
@@ -188,7 +192,7 @@ class Game extends React.Component {
 
 
     let status;
-    if(winner){
+    if(winner==='x'||winner==='o'){
       status = "Winner : "+winner;
     }
     // Adding game drawn message
@@ -196,7 +200,7 @@ class Game extends React.Component {
       status = 'Game Drawn';
     }
     else {
-      status = 'Next player: '+ (this.state.xIsNext? 'X': 'O');
+      status = 'Next player: '+ (this.state.xIsNext? 'x': 'o');
     }
 
     return (
@@ -234,11 +238,10 @@ function calculateWinner(squares){
     if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
     {
       // todo return cell indices to highlight the boxes
-      console.log(a,b,c);
-      return squares[a];
+      return [squares[a], a, b, c];
     }
   }
-
+  return ['-',-1,-1,-1];
 }
 
 // ========================================
