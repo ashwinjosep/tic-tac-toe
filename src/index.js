@@ -63,11 +63,25 @@ class Board extends React.Component {
 
   renderSquare(i) {
     return (
-      <Square
+      <Square key={i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
     );
+  }
+
+  createGrid(){
+    let grid = [];
+    for(let i=0;i<3;i++){
+        let row = [];
+        for(let j=0;j<3;j++)
+        {
+          let cell = this.renderSquare(((i*3)+j))
+          row.push(cell)
+        }
+        grid.push(<div className="board-row" key={i} >{row}</div>);
+    }
+    return grid;
   }
 
   render() {
@@ -83,22 +97,26 @@ class Board extends React.Component {
 
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {this.createGrid()}
       </div>
+      // replacing this with function
+      // <div>
+      //   <div className="board-row">
+      //     {this.renderSquare(0)}
+      //     {this.renderSquare(1)}
+      //     {this.renderSquare(2)}
+      //   </div>
+      //   <div className="board-row">
+      //     {this.renderSquare(3)}
+      //     {this.renderSquare(4)}
+      //     {this.renderSquare(5)}
+      //   </div>
+      //   <div className="board-row">
+      //     {this.renderSquare(6)}
+      //     {this.renderSquare(7)}
+      //     {this.renderSquare(8)}
+      //   </div>
+      // </div>
     );
   }
 }
@@ -173,6 +191,10 @@ class Game extends React.Component {
     if(winner){
       status = "Winner : "+winner;
     }
+    // Adding game drawn message
+    else if (this.state.stepNumber===9) {
+      status = 'Game Drawn';
+    }
     else {
       status = 'Next player: '+ (this.state.xIsNext? 'X': 'O');
     }
@@ -211,6 +233,8 @@ function calculateWinner(squares){
     const[a, b, c]=lines[i];
     if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
     {
+      // todo return cell indices to highlight the boxes
+      console.log(a,b,c);
       return squares[a];
     }
   }
