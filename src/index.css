@@ -1,11 +1,6 @@
 body {
-  /* font: 14px "Century Gothic", Futura, sans-serif;*/
-  font-family: 'Farro', sans-serif;
+  font-family: "Farro", sans-serif;
   margin: 20px;
-}
-
-ol, ul {
-  padding-left: 30px;
 }
 
 .board-row:after {
@@ -23,18 +18,18 @@ ol, ul {
   color: #ecf0f1;
   border: 2px solid #bdc3c7;
   float: left;
-  font-size: 40px;
+  font-size: 4rem;
   font-weight: bold;
-  line-height: 34px;
-  height: 100px;
+  line-height: 3.4rem;
+  height: 10rem;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 100px;
+  width: 10rem;
 }
 
-.square:hover{
+.square:hover {
   -webkit-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
   background-color: #bdc3c7;
@@ -57,32 +52,17 @@ ol, ul {
 }
 
 .game {
-  /* display: flex;
-  flex-direction: row; */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-box-orient:horizontal;
-  -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-        flex-direction: row;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .game-info {
-  margin-left: 50px;
+  text-align: center;
 }
 
-/* CSS for bold button */
-/* .btnHighlight {
-  font-style: italic;
-  font-weight: bold;
-} */
-
-/* CSS for normal button */
-/* .btnNormal {
-  font-style: normal;
-  font-weight: normal;
-} */
+.game-board {
+  margin: 5%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
